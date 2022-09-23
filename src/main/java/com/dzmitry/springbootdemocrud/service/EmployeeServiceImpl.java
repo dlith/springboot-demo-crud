@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -27,8 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     @Transactional
-    public Employee findById(int id) {
-        return employeeDAO.findById(id);
+    public Optional<Employee> findById(int id) {
+        return Optional.ofNullable(employeeDAO.findById(id));
     }
 
     @Override

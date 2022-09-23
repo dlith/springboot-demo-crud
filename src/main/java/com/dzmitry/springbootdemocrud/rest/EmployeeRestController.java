@@ -4,9 +4,11 @@ import com.dzmitry.springbootdemocrud.dao.EmployeeDAO;
 import com.dzmitry.springbootdemocrud.entity.Employee;
 import com.dzmitry.springbootdemocrud.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -15,7 +17,7 @@ public class EmployeeRestController {
     private EmployeeService employeeService;
 
     @Autowired
-    public EmployeeRestController(EmployeeService employeeService) {
+    public EmployeeRestController(@Qualifier("employeeServiceJpaRepImpl") EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -25,8 +27,8 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/employees/{employeeId}")
-    public Employee findById(@PathVariable int employeeId) {
-        Employee employee = employeeService.findById(employeeId);
+    public Optional<Employee> findById(@PathVariable int employeeId) {
+        Optional<Employee> employee = employeeService.findById(employeeId);
         if(employee == null) {
             throw new RuntimeException("Employee id not found - " + employeeId);
         }
@@ -48,9 +50,9 @@ public class EmployeeRestController {
 
     @DeleteMapping("/employees/{employeeId}")
     public String deleteEmployee(@PathVariable int employeeId) {
-        Employee employee = employeeService.findById(employeeId);
+        Optional<Employee> employee = employeeService.findById(employeeId);
 
-        if(employee == null) {
+        if(employee.isPresent()) {
             throw new RuntimeException("Employee id not found - " + employeeId);
         }
         employeeService.deleteById(employeeId);
