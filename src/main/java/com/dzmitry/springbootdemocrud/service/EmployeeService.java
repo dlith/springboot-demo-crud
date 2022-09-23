@@ -1,10 +1,10 @@
-package com.dzmitry.springbootdemocrud.dao;
+package com.dzmitry.springbootdemocrud.service;
 
 import com.dzmitry.springbootdemocrud.entity.Employee;
 
 import java.util.List;
 
-public interface EmployeeDAO {
+public interface EmployeeService {
 
     public List<Employee> findAll();
     public Employee findById(int id);
