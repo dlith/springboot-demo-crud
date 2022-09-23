@@ -27,7 +27,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("from Employee", Employee.class);
         List<Employee> employees = query.getResultList();
-
         return employees;
     }
 }
