@@ -21,7 +21,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public List<Employee> findAll() {
 
         Session session = entityManager.unwrap(Session.class);
@@ -31,7 +30,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public Employee findById(int id) {
         Session session = entityManager.unwrap(Session.class);
         Employee employee = session.get(Employee.class, id);
@@ -39,14 +37,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    @Transactional
     public void save(Employee employee) {
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(employee);
     }
 
     @Override
-    @Transactional
     public void deleteById(int id) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createQuery("delete from Employee where id=:employeeId");
